@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二頁：消化系統大解密</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>第二頁：消化系統大解密</h1>
+        <p id="instruction">【器官拼圖遊戲】請將右側的器官拖曳到人體輪廓的正確位置。</p>
+    </header>
+
+    <main class="game-container">
+        <div class="main-game-area">
+            <div class="human-outline-container">
+                <img src="images/body-outline.svg" alt="人體輪廓" class="body-outline-img">
+
+                <div class="drop-zone" data-organ="mouth"       id="dz-mouth"></div>
+                <div class="drop-zone" data-organ="esophagus"   id="dz-esophagus"></div>
+                <div class="drop-zone" data-organ="liver"       id="dz-liver"></div>
+                <div class="drop-zone" data-organ="stomach"     id="dz-stomach"></div>
+                <div class="drop-zone" data-organ="pancreas"    id="dz-pancreas"></div>
+                <div class="drop-zone" data-organ="large-intestine" id="dz-large-intestine"></div>
+                <div class="drop-zone" data-organ="small-intestine" id="dz-small-intestine"></div>
+                 <div class="gland-target" data-gland-target-for="mouth"></div>
+                <div class="gland-target" data-gland-target-for="stomach"></div>
+                <div class="gland-target" data-gland-target-for="small-intestine"></div>
+            </div>
+
+             <div id="game2-sequence-bar" class="sequence-bar hide">
+                <div class="seq-slot">1</div>
+                <div class="arrow">→</div>
+                <div class="seq-slot">2</div>
+                <div class="arrow">→</div>
+                <div class="seq-slot">3</div>
+                <div class="arrow">→</div>
+                <div class="seq-slot">4</div>
+                <div class="arrow">→</div>
+                <div class="seq-slot">5</div>
+            </div>
+        </div>
+
+        <div id="organ-pieces-container" class="organ-pieces">
+            <img src="images/mouth.png" alt="口腔" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="mouth">
+            <img src="images/esophagus.png" alt="食道" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="esophagus">
+            <img src="images/stomach.png" alt="胃" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="stomach">
+            <img src="images/small-intestine.png" alt="小腸" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="small-intestine">
+            <img src="images/large-intestine.png" alt="大腸" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="large-intestine">
+            <img src="images/liver.png" alt="肝臟" class="organ-piece" draggable="true" data-organ-type="gland" data-organ="liver">
+            <img src="images/pancreas.png" alt="胰臟" class="organ-piece" draggable="true" data-organ-type="gland" data-organ="pancreas">
+            <img src="images/salivary-glands.png" alt="唾腺" class="organ-piece" draggable="true" data-organ-type="gland" data-organ="salivary-glands">
+        </div>
+    </main>
+
+    <footer>
+        <button id="prev-btn">上一頁</button>
+        <button id="reset-btn">重新遊戲</button>
+        <button id="next-btn" disabled>下一頁</button>
+    </footer>
+
+    <div id="info-modal" class="modal-overlay hide">
+        <div class="modal-content">
+            <h2 id="modal-title">器官名稱</h2>
+            <p id="modal-description">器官的簡單介紹。</p>
+            <button id="modal-close-btn">關閉</button>
+        </div>
+    </div>
+
+    <div id="completion-message" class="modal-overlay hide">
+        <div class="modal-content">
+            <h2>🎉 恭喜你！🎉</h2>
+            <p>完全掌握消化系統了！可以前往下一頁囉！</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
