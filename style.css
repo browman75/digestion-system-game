@@ -119,11 +119,11 @@ h1 {
 }
 
 /* 放置區位置 (需要根據你的輪廓圖精確調整) */
-#dz-mouth { top: 13%; left: 42%; width: 16%; height: 8%; }
-#dz-esophagus { top: 21%; left: 46%; width: 8%; height: 18%; }
+#dz-mouth { top: 13%; left: 35%; width: 23%; height: 8%; }
+#dz-esophagus { top: 21%; left: 48%; width: 8%; height: 18%; }
 #dz-stomach { top: 38%; left: 48%; width: 22%; height: 12%; }
 #dz-liver { top: 38%; left: 30%; width: 20%; height: 15%; }
-#dz-pancreas { top: 46%; left: 40%; width: 18%; height: 8%; }
+#dz-pancreas { top: 46%; left: 40%; width: 18%; height: 4%; }
 #dz-small-intestine { top: 50%; left: 35%; width: 30%; height: 20%; }
 #dz-large-intestine { top: 49%; left: 32%; width: 36%; height: 25%; }
 
