@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         game1Correct: 0,
         game2Step: 0,
         game3Correct: 0,
-        // 修改點：只計算一開始就顯示的器官數量 (不含唾腺)
         game1Total: document.querySelectorAll('.organ-piece:not(.hide)').length,
         game2Total: digestiveTractOrder.length,
         game3Total: Object.keys(glandMappings).length
@@ -48,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 遊戲一：器官拼圖 ---
     function initializeGame1() {
         organPieces.forEach(piece => {
-            // 只為非隱藏的元素添加事件監聽
             if (!piece.classList.contains('hide')) {
                 piece.addEventListener('dragstart', dragStart);
                 piece.addEventListener('dragend', dragEnd);
@@ -99,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // 檢查第一關是否完成的函式
     function checkGame1Completion() {
+        // 當正確放置的器官數量 等於 遊戲一設定的總目標數量時，進入下一關
         if (gameState.game1Correct === gameState.game1Total) {
             setTimeout(() => {
                 instructionText.textContent = '【消化道順序遊戲】太棒了！現在請按照食物經過的順序，點擊對應的消化道器官。';
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeGame2() {
         game2Bar.classList.remove('hide');
         organPieces.forEach(piece => {
-            if (piece.dataset.organType === 'tract') {
+            if (piece.dataset.organType === 'tract' && piece.classList.contains('placed')) {
                 piece.classList.add('clickable');
                 piece.addEventListener('click', handleSequenceClick);
             }
@@ -146,13 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function initializeGame3() {
         game2Bar.classList.add('hide');
 
-        // 修改點：在遊戲三開始時，找到並顯示唾腺，讓它可以參與
         const salivaryGland = document.querySelector('[data-organ="salivary-glands"]');
         if (salivaryGland) {
             salivaryGland.classList.remove('hide');
         }
         
-        // 讓所有在旁邊容器的器官 (包含剛顯示的唾腺) 都可以拖曳
         const remainingGlands = organPiecesContainer.querySelectorAll('.organ-piece');
         remainingGlands.forEach(gland => {
             gland.setAttribute('draggable', 'true');
@@ -160,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             gland.addEventListener('dragend', dragEnd);
         });
 
-        // 顯示並啟用消化腺的放置目標
         glandTargets.forEach(target => {
             target.style.display = 'block';
             target.addEventListener('dragover', dragOver);
@@ -176,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetOrgan = this.dataset.glandTargetFor;
 
         if (glandMappings[glandId] === targetOrgan) {
-            draggedItem.remove(); // 從旁邊的容器移除
+            draggedItem.remove();
             showModal(glandId);
             gameState.game3Correct++;
             checkGame3Completion();
