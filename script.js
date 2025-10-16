@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'salivary-glands': 'mouth',
         'liver': 'small-intestine',
         'pancreas': 'small-intestine'
-        // 胃腺和腸腺內建於器官中，這裡簡化為拖曳代表性的肝和胰
     };
 
     // --- 遊戲狀態 ---
@@ -39,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         game1Correct: 0,
         game2Step: 0,
         game3Correct: 0,
-        game1Total: document.querySelectorAll('.organ-piece').length,
+        // 修改點：只計算一開始就顯示的器官數量 (不含唾腺)
+        game1Total: document.querySelectorAll('.organ-piece:not(.hide)').length,
         game2Total: digestiveTractOrder.length,
         game3Total: Object.keys(glandMappings).length
     };
@@ -48,8 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 遊戲一：器官拼圖 ---
     function initializeGame1() {
         organPieces.forEach(piece => {
-            piece.addEventListener('dragstart', dragStart);
-            piece.addEventListener('dragend', dragEnd);
+            // 只為非隱藏的元素添加事件監聽
+            if (!piece.classList.contains('hide')) {
+                piece.addEventListener('dragstart', dragStart);
+                piece.addEventListener('dragend', dragEnd);
+            }
         });
 
         dropZones.forEach(zone => {
@@ -70,23 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
         draggedItem = null;
     }
 
-    function dragOver(e) {
-        e.preventDefault();
-    }
-
-    function dragEnter(e) {
-        e.preventDefault();
-        this.classList.add('drag-over');
-    }
-
-    function dragLeave() {
-        this.classList.remove('drag-over');
-    }
+    function dragOver(e) { e.preventDefault(); }
+    function dragEnter(e) { e.preventDefault(); this.classList.add('drag-over'); }
+    function dragLeave() { this.classList.remove('drag-over'); }
 
     function drop(e) {
         this.classList.remove('drag-over');
         if (this.dataset.organ === draggedItem.dataset.organ) {
-            // 放置正確
             this.appendChild(draggedItem);
             draggedItem.classList.add('placed');
             draggedItem.style.position = 'absolute';
@@ -101,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
             gameState.game1Correct++;
             checkGame1Completion();
         } else {
-            // 放置錯誤
             this.classList.add('error-shake');
             setTimeout(() => this.classList.remove('error-shake'), 500);
         }
@@ -130,14 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleSequenceClick() {
         const organId = this.dataset.organ;
         if (organId === digestiveTractOrder[gameState.game2Step]) {
-            // 順序正確
             seqSlots[gameState.game2Step].textContent = organInfo[organId].name;
             this.classList.remove('clickable');
             this.removeEventListener('click', handleSequenceClick);
             gameState.game2Step++;
             checkGame2Completion();
         } else {
-            // 順序錯誤
             this.classList.add('error-shake');
             setTimeout(() => this.classList.remove('error-shake'), 500);
         }
@@ -154,9 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 遊戲三：消化腺配對 ---
     function initializeGame3() {
-        game2Bar.classList.add('hide'); // 隱藏順序條
+        game2Bar.classList.add('hide');
+
+        // 修改點：在遊戲三開始時，找到並顯示唾腺，讓它可以參與
+        const salivaryGland = document.querySelector('[data-organ="salivary-glands"]');
+        if (salivaryGland) {
+            salivaryGland.classList.remove('hide');
+        }
         
-        // 讓還在旁邊的消化腺可以拖曳
+        // 讓所有在旁邊容器的器官 (包含剛顯示的唾腺) 都可以拖曳
         const remainingGlands = organPiecesContainer.querySelectorAll('.organ-piece');
         remainingGlands.forEach(gland => {
             gland.setAttribute('draggable', 'true');
@@ -180,13 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetOrgan = this.dataset.glandTargetFor;
 
         if (glandMappings[glandId] === targetOrgan) {
-            // 配對正確
             draggedItem.remove(); // 從旁邊的容器移除
             showModal(glandId);
             gameState.game3Correct++;
             checkGame3Completion();
         } else {
-            // 配對錯誤
             this.classList.add('error-shake');
             setTimeout(() => this.classList.remove('error-shake'), 500);
         }
