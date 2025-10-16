@@ -14,10 +14,13 @@
     </header>
 
     <main class="game-container">
+        <!-- 遊戲主要區域 -->
         <div class="main-game-area">
             <div class="human-outline-container">
+                <!-- 修改點：更新圖片路徑為 .png -->
                 <img src="images/body-outline.png" alt="人體輪廓" class="body-outline-img">
 
+                <!-- 器官放置區 (Drop Zones) -->
                 <div class="drop-zone" data-organ="mouth"       id="dz-mouth"></div>
                 <div class="drop-zone" data-organ="esophagus"   id="dz-esophagus"></div>
                 <div class="drop-zone" data-organ="liver"       id="dz-liver"></div>
@@ -25,12 +28,14 @@
                 <div class="drop-zone" data-organ="pancreas"    id="dz-pancreas"></div>
                 <div class="drop-zone" data-organ="large-intestine" id="dz-large-intestine"></div>
                 <div class="drop-zone" data-organ="small-intestine" id="dz-small-intestine"></div>
-                 <div class="gland-target" data-gland-target-for="mouth"></div>
+                 <!-- 消化腺的放置目標，遊戲三使用 -->
+                <div class="gland-target" data-gland-target-for="mouth"></div>
                 <div class="gland-target" data-gland-target-for="stomach"></div>
                 <div class="gland-target" data-gland-target-for="small-intestine"></div>
             </div>
 
-             <div id="game2-sequence-bar" class="sequence-bar hide">
+             <!-- 遊戲二：順序遊戲 -->
+            <div id="game2-sequence-bar" class="sequence-bar hide">
                 <div class="seq-slot">1</div>
                 <div class="arrow">→</div>
                 <div class="seq-slot">2</div>
@@ -43,6 +48,7 @@
             </div>
         </div>
 
+        <!-- 可拖曳的器官/消化腺區域 -->
         <div id="organ-pieces-container" class="organ-pieces">
             <img src="images/mouth.png" alt="口腔" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="mouth">
             <img src="images/esophagus.png" alt="食道" class="organ-piece" draggable="true" data-organ-type="tract" data-organ="esophagus">
@@ -52,6 +58,7 @@
             <img src="images/liver.png" alt="肝臟" class="organ-piece" draggable="true" data-organ-type="gland" data-organ="liver">
             <img src="images/pancreas.png" alt="胰臟" class="organ-piece" draggable="true" data-organ-type="gland" data-organ="pancreas">
             
+            <!-- 唾腺預設隱藏，直到遊戲三才會出現 -->
             <img src="images/salivary-glands.png" alt="唾腺" class="organ-piece hide" draggable="false" data-organ-type="gland" data-organ="salivary-glands">
         </div>
     </main>
@@ -62,6 +69,7 @@
         <button id="next-btn" disabled>下一頁</button>
     </footer>
 
+    <!-- 彈出式資訊視窗 (Modal) -->
     <div id="info-modal" class="modal-overlay hide">
         <div class="modal-content">
             <h2 id="modal-title">器官名稱</h2>
@@ -70,6 +78,7 @@
         </div>
     </div>
 
+    <!-- 遊戲完成祝賀畫面 -->
     <div id="completion-message" class="modal-overlay hide">
         <div class="modal-content">
             <h2>🎉 恭喜你！🎉</h2>
