@@ -49,7 +49,7 @@ h1 {
 
 .human-outline-container {
     position: relative;
-    max-width: 400px; /* 可根據你的輪廓圖調整 */
+    max-width: 400px;
     width: 100%;
     margin: 0 auto;
 }
@@ -73,9 +73,13 @@ h1 {
 }
 
 .organ-piece {
+    /* 修改點：優化右側器官樣式，讓其在格子內縮放 */
     width: 100%;
+    height: 100%;
+    object-fit: contain; /* 確保圖片等比例縮放填滿容器 */
     cursor: grab;
     transition: transform 0.2s;
+    min-height: 80px; /* 給予一個最小高度避免格子太小 */
 }
 
 .organ-piece:hover {
@@ -90,8 +94,9 @@ h1 {
 .organ-piece.placed {
     position: absolute;
     cursor: default;
-    opacity: 0.7;
+    opacity: 1;
     pointer-events: none; /* 放置後不可再互動 */
+    object-fit: fill; /* 放置後填滿放置區 */
 }
 /* 遊戲二點擊模式啟用 */
 .organ-piece.placed.clickable {
@@ -118,7 +123,7 @@ h1 {
     border: none;
 }
 
-/* 放置區位置 (需要根據你的輪廓圖精確調整) */
+/* 修改點：更新後的放置區位置 */
 #dz-mouth { top: 13%; left: 35%; width: 23%; height: 8%; }
 #dz-esophagus { top: 21%; left: 48%; width: 8%; height: 18%; }
 #dz-stomach { top: 38%; left: 48%; width: 22%; height: 12%; }
@@ -127,9 +132,10 @@ h1 {
 #dz-small-intestine { top: 50%; left: 35%; width: 30%; height: 20%; }
 #dz-large-intestine { top: 49%; left: 32%; width: 36%; height: 25%; }
 
+
 /* 消化腺放置目標 (遊戲三) */
 .gland-target { position: absolute; display: none; }
-.gland-target[data-gland-target-for="mouth"] { top: 13%; left: 42%; width: 16%; height: 8%; }
+.gland-target[data-gland-target-for="mouth"] { top: 13%; left: 35%; width: 23%; height: 8%; }
 .gland-target[data-gland-target-for="stomach"] { top: 38%; left: 48%; width: 22%; height: 12%; }
 .gland-target[data-gland-target-for="small-intestine"] { top: 50%; left: 35%; width: 30%; height: 20%; }
 
